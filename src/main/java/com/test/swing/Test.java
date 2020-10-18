@@ -12,22 +12,27 @@ import java.io.File;
 
 public class Test {
 
-	private JTextField textFieldChosenFilePath = null;
-	private JButton buttonOpenFileChooser = null;
+	private JFrame frame;
 
-	private JFileChooser fileChooser = null;
-	private File chosenFile = null;
+	private JPanel panelContainer;
 
-	private JTextField textFieldRegex = null;
-	private JTextField textFieldReplacement = null;
+	private JTextField textFieldChosenFilePath;
+	private JButton buttonOpenFileChooser;
 
-	private JButton buttonPreview = null;
-	private JButton buttonExecute = null;
+	private JFileChooser fileChooser;
+	private File chosenFile;
 
-	private JTextArea textAreaResult = null;
+	private JLabel labelRegex;
+	private JTextField textFieldRegex;
 
-//	private JDialog msgDlg = null;
-//	private MenuBar menuBar = null;
+	private JLabel labelReplacement;
+	private JTextField textFieldReplacement;
+
+	private JButton buttonPreview;
+
+	private JButton buttonExecute;
+
+	private JTextArea textAreaResult;
 
 	public static void main(String[] args) {
 		new Test();
@@ -39,15 +44,10 @@ public class Test {
 
 	public void init() {
 		// Panel Container
-		JPanel panelContainer = new JPanel();
+		panelContainer = new JPanel();
 		panelContainer.setLayout(new BoxLayout(panelContainer, BoxLayout.Y_AXIS));
 
 		{
-			// File Chooser
-			fileChooser = new JFileChooser();
-			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			fileChooser.setMultiSelectionEnabled(false);
-
 			// Panel
 			JPanel panel = new JPanel();
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -65,11 +65,17 @@ public class Test {
 					int returnVal = fileChooser.showOpenDialog(panelContainer);
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						chosenFile = fileChooser.getSelectedFile();
+						textFieldChosenFilePath.setText(chosenFile.getAbsolutePath());
 						preview();
 					}
 				}
 			});
 			panel.add(buttonOpenFileChooser);
+
+			// File Chooser
+			fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			fileChooser.setMultiSelectionEnabled(false);
 
 			// add to panelContainer
 			panelContainer.add(panel);
@@ -81,7 +87,7 @@ public class Test {
 			panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 			// Label Regex
-			JLabel labelRegex = new JLabel("正则表达式");
+			labelRegex = new JLabel("正则表达式");
 			panel.add(labelRegex);
 
 			// TextField Regex
@@ -102,7 +108,7 @@ public class Test {
 			panel.add(textFieldRegex);
 
 			// Label Replacement
-			JLabel labelReplacement = new JLabel("替换字符串");
+			labelReplacement = new JLabel("替换字符串");
 			panel.add(labelReplacement);
 
 			// TextField Replacement
@@ -189,7 +195,7 @@ public class Test {
 		}
 
 		// Frame
-		JFrame frame = new JFrame("title");
+		frame = new JFrame("title");
 		frame.setSize(800, 700);
 //		frame.setLocation(200, 200);
 //		frame.setBounds(400, 100, 800, 700);
